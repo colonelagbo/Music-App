@@ -2,12 +2,15 @@ import React from 'react';
 import headerImage from './assets/header-image.png'; 
 import homeIcon from './assets/home-icon.png';
 
+
 function App() {
+
   const handleHomeClick = () => {
     
     console.log('Home button clicked');
   };
 
+ 
 
   return (
     <div className="min-h-screen bg-gray-100">
@@ -15,7 +18,7 @@ function App() {
         <img 
           src={headerImage} 
           alt="Header"
-          className="w-full h-64 object-cover" 
+          className="h-56 2xl:h-full  w-full object-cover" 
         />
 <button
           onClick={handleHomeClick}
@@ -24,11 +27,13 @@ function App() {
           <img 
             src={homeIcon} 
             alt="Home"
-            className="w-full h-full object-cover"
+            className="w-full h-full object-cover bg-white"
           />
         </button>
 
       </header>
+      
+
       {/* Rest of your application content */}
     </div>
   );
