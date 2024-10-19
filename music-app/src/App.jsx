@@ -1,14 +1,11 @@
 import React, { useState } from 'react';
-import Header from './components/Header';
-import SearchBar from './components/SearchBar';
-import TrackList from './components/TrackList';
-import Footer from './components/Footer';
+import HomePage from './components/HomePage';
 import MusicPlayer from './components/MusicPlayer';
-import { searchTracks } from './api/deezerApi';
+
 
 function App() {
-  const [tracks, setTracks] = useState([]);
   const [currentTrack, setCurrentTrack] = useState(null);
+  const [tracks, setTracks] = useState([]);
 
   const handleSearch = async (query) => {
     try {
@@ -16,19 +13,34 @@ function App() {
       setTracks(results);
     } catch (error) {
       console.error('Error searching tracks:', error);
-      // Handle error (e.g., show error message to user)
+      setTracks([]); // Clear tracks on error
     }
   };
 
+  const handleTrackSelect = (track) => {
+    setCurrentTrack(track);
+  };
+
+  const navigateToHome = () => {
+    setCurrentTrack(null);
+  };
+
   return (
-    <div className="flex flex-col min-h-screen">
-      <Header />
-      <main className="flex-grow container mx-auto px-4 py-8">
-        <SearchBar onSearch={handleSearch} />
-        <TrackList tracks={tracks} onTrackSelect={setCurrentTrack} />
-      </main>
-      <Footer />
-      {currentTrack && <MusicPlayer track={currentTrack} />}
+    <div>
+      {currentTrack ? (
+        <MusicPlayer 
+          track={currentTrack} 
+          onSearch={handleSearch} 
+          onNavigateHome={navigateToHome}
+        />
+      ) : (
+        <HomePage 
+          tracks={tracks} 
+          onTrackSelect={handleTrackSelect} 
+          onSearch={handleSearch}
+          onNavigateHome={navigateToHome}
+        />
+      )}
     </div>
   );
 }

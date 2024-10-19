@@ -1,32 +1,44 @@
 import React, { useState } from 'react';
-import { Search } from 'lucide-react';
+import SearchBar from './SearchBar';
 
-function SearchBar({ onSearch }) {
-  const [query, setQuery] = useState('');
+function DeezerSearch() {
+  const [searchResults, setSearchResults] = useState(null);
+  const [error, setError] = useState(null);
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    onSearch(query);
+  const handleSearch = async (query) => {
+    try {
+      const response = await fetch("https://api.deezer.com/search?q=eminem");
+      if (!response.ok) {
+        throw new Error('Failed to fetch data from Deezer API');
+      }
+      const data = await response.json();
+      setSearchResults(data.data);
+      setError(null);
+    } catch (err) {
+      setError(err.message);
+      setSearchResults(null);
+    }
   };
 
   return (
-    <div className="max-w-md mx-auto mb-8">
-      <form onSubmit={handleSubmit}>
-        <div className="flex items-center border-b-2 border-gray-300 py-2">
-          <input
-            type="text"
-            value={query}
-            onChange={(e) => setQuery(e.target.value)}
-            placeholder="Search for tracks..."
-            className="appearance-none bg-transparent border-none w-full text-gray-700 mr-3 py-1 px-2 leading-tight focus:outline-none"
-          />
-          <button type="submit" className="flex-shrink-0 text-gray-600 hover:text-gray-800">
-            <Search size={24} />
-          </button>
+    <div className="container mx-auto p-4">
+      <SearchBar onSearch={handleSearch} />
+      {error && <p className="text-red-500">{error}</p>}
+      {searchResults && (
+        <div className="mt-4">
+          <h2 className="text-xl font-bold mb-2">Search Results:</h2>
+          <ul className="space-y-2">
+            {searchResults.map((item) => (
+              <li key={item.id} className="border p-2 rounded">
+                <img src={item.album.cover_small} alt={item.title} className="inline-block mr-2" />
+                <span className="font-semibold">{item.title}</span> by {item.artist.name}
+              </li>
+            ))}
+          </ul>
         </div>
-      </form>
+      )}
     </div>
   );
 }
 
-export default SearchBar;
+export default DeezerSearch;
