@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import HomePage from './components/HomePage';
 import MusicPlayer from './components/MusicPlayer';
-
+import { searchResults } from './searchResults';
 
 function App() {
   const [currentTrack, setCurrentTrack] = useState(null);

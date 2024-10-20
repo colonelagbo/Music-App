@@ -3,10 +3,10 @@ import Header from './Header';
 import SearchBar from './SearchBar';
 import TrackList from './TrackList';
 import Footer from './Footer';
-
+import { searchResults } from '../searchResults';
 
 function HomePage({ onTrackSelect, onNavigateHome  }) {
-  const [tracks, setTracks] = useState([]);
+  const [tracks, setTracks] = useState(searchResults.data);
 
   const handleSearch = async (query) => {
     try {

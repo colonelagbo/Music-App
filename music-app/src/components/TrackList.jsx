@@ -1,37 +1,6 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 
-function TrackList({ onTrackSelect }) {
-  const [tracks, setTracks] = useState([]);
-  const [isLoading, setIsLoading] = useState(true);
-  const [error, setError] = useState(null);
-
-  useEffect(() => {
-    const fetchTracks = async () => {
-      try {
-        const response = await fetch("https://api.deezer.com/playlist/908622995");
-        if (!response.ok) {
-          throw new Error('Failed to fetch tracks');
-        }
-        const data = await response.json();
-        setTracks(data.data);
-        setIsLoading(false);
-      } catch (error) {
-        setError(error.message);
-        setIsLoading(false);
-      }
-    };
-
-    fetchTracks();
-  }, []);
-
-  if (isLoading) {
-    return <div className="text-center text-white">Loading...</div>;
-  }
-
-  if (error) {
-    return <div className="text-center text-white">Error: {error}</div>;
-  }
-
+function TrackList({ tracks, onTrackSelect }) {
   return (
     <div className="mb-8">
       <h2 className="text-3xl font-bold text-center mb-6 text-white">Music Playlist</h2>
@@ -45,7 +14,7 @@ function TrackList({ onTrackSelect }) {
             >
               <img src={track.album.cover_medium} alt={track.title} className="w-full h-48 object-cover" />
               <div className="p-4">
-                <h3 className="font-semibold text-lg mb-1 truncate">{track.title}</h3>
+                <h3 className="font-semibold text-lg mb-1 truncate text-gray-900">{track.title}</h3>
                 <p className="text-gray-600 truncate">{track.artist.name}</p>
               </div>
             </div>

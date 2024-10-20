@@ -11,13 +11,13 @@ import HomePage from './components/HomePage.jsx'
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
-    {/* <App /> */}
+    <App />
     {/* <MusicPlayer/> */}
     {/* <Header/> */}
 
 {/* <SearchBar/> */}
 {/* <Footer/> */}
-<TrackList/>
+{/* <TrackList/> */}
 {/* <MusicPlayer/> */}
 {/* <HomePage/> */}
 
