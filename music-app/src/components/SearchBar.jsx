@@ -14,11 +14,16 @@ const SearchBar = () => {
     setIsLoading(true);
     setError(null);
 
+    const options = {
+      method: 'GET',
+      headers: {
+        'x-rapidapi-host': 'deezerdevs-deezer.p.rapidapi.com',
+        'x-rapidapi-key': process.env.REACT_APP_RAPIDAPI_KEY // use env variable here
+      }
+    };
+
     try {
-      const response = await fetch(`https://api.deezer.com/search?q=${encodeURIComponent(query)}`, {
-        method: 'GET',
-        mode: 'no-cors' 
-      });
+      const response = await fetch(`https://deezerdevs-deezer.p.rapidapi.com/search?q=${encodeURIComponent(query)}`, options);
       if (!response.ok) {
         throw new Error(`HTTP error! status: ${response.status}`);
       }
@@ -54,20 +59,30 @@ const SearchBar = () => {
       </form>
       {isLoading && <p>Loading...</p>}
       {error && <p className="text-red-500">{error}</p>}
-      <SearchResults results={results} />
+      {/* Conditionally render the SearchResults container only if there are results */}
+      {results.length > 0 && <SearchResults results={results} />}
     </div>
   );
 };
 
 const SearchResults = ({ results }) => (
-  <ul className="mt-4">
-    {results.map((item) => (
-      <li key={item.id} className="mb-2 flex items-center">
-        <img src={item.album.cover_small} alt={item.title} className="w-10 h-10 mr-2" />
-        <span>{item.title} by {item.artist.name}</span>
-      </li>
-    ))}
-  </ul>
+  <div className="bg-white rounded-xl shadow-lg p-16 max-w-screen-xl mx-auto">
+    <ul className="mt-4 space-y-6">
+      {results.map((item) => (
+        <li key={item.id} className="flex items-center space-x-6">
+          <img
+            src={item.album.cover_big}
+            alt={item.title}
+            className="w-32 h-32 rounded-lg"
+          />
+          <div className="text-2xl font-semibold">
+            <span>{item.title}</span> <br />
+            <span className="text-gray-600">by {item.artist.name}</span>
+          </div>
+        </li>
+      ))}
+    </ul>
+  </div>
 );
 
 export default SearchBar;
