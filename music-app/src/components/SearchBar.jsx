@@ -17,7 +17,7 @@ const SearchBar = () => {
     try {
       const response = await fetch(`https://api.deezer.com/search?q=${encodeURIComponent(query)}`, {
         method: 'GET',
-        mode: 'cors' // Ensure mode is set to 'cors'
+        mode: 'no-cors' 
       });
       if (!response.ok) {
         throw new Error(`HTTP error! status: ${response.status}`);
