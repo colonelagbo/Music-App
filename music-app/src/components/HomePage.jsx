@@ -5,6 +5,7 @@ import TrackList from './TrackList';
 import Footer from './Footer';
 import { searchResults } from '../searchResults';
 
+
 function HomePage({ onTrackSelect, onNavigateHome  }) {
   const [tracks, setTracks] = useState(searchResults.data);
 

@@ -1,5 +1,6 @@
 import React from 'react';
 
+
 function Header({ onNavigateHome }) {
   return (
     <header className="relative h-64 bg-cover bg-center" style={{backgroundImage: "url('/src/assets/images/header-image.jpg')"}}>
@@ -12,4 +13,4 @@ function Header({ onNavigateHome }) {
   );
 }
 
-export default Header;                     
+export default Header;                    

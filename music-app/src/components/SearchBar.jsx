@@ -18,7 +18,7 @@ const SearchBar = () => {
       method: 'GET',
       headers: {
         'x-rapidapi-host': 'deezerdevs-deezer.p.rapidapi.com',
-        'x-rapidapi-key': process.env.REACT_APP_RAPIDAPI_KEY // use env variable here
+        'x-rapidapi-key': 'a29ce1bfc6msh5af6332cc5abfbfp1b2562jsn617b8859a29b'
       }
     };
 
